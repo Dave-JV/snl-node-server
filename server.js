@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser')
 var http = require('http');
+var utils = require('./src/utils');
 var app = express();
 var appPort = 64001;
 var dbUtils = require('./src/database.utils');
@@ -17,15 +18,25 @@ app.use(bodyParser.json());
 console.log('app use initialised');
 
 app.get('/barinfo', function(req, res) {
-    dbUtils.queryDatabase('SELECT * FROM bars', undefined, res, function(bars) {
-        res.end(barUtils.convertDBBarObjectsToJSON(bars));
-    });
+    utils.escape(() => {
+        dbUtils.queryDatabase('SELECT * FROM bars', undefined, function(bars) {
+            res.end(barUtils.convertDBBarObjectsToJSON(bars));
+        });
+    }, (error) => {
+        console.log(error);
+        res.send(503);
+    })
 });
 
 app.get('/drinkinfo', function(req, res) {
-    queryNightLifeDatabase('SELECT * FROM drinks', undefined, res, function(drinks) {
-        res.end(drinksUtils.convertDrinkDBObjectsToJSON(drinks));
-    });
+    utils.escape(() => {
+        queryNightLifeDatabase('SELECT * FROM drinks', undefined, function(drinks) {
+            res.end(drinksUtils.convertDrinkDBObjectsToJSON(drinks));
+        });
+    }, (error) => {
+        console.log(error);
+        res.send(503);
+    })
 });
 
 console.log('listeners initialised');
