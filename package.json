@@ -1,0 +1,13 @@
+{
+  "name": "SNL-Node-Server",
+  "description": "Node Server for Student Night Life",
+  "version": "1.0.0",
+  "devDependencies": {
+    "body-parser": "1.15.2",
+    "lodash": "^4.17.11",
+    "mysql": "2.11.1"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
