@@ -43,8 +43,6 @@ console.log('listeners initialised');
 
 //Test for continuous deployment
 
-//var httpServer = http.createServer(app).listen(appPort);
+var httpServer = http.createServer(app).listen(appPort);
 
-app.listen(appPort, 'localhost');
-
-console.log('server listening', app);
+console.log('server listening');
