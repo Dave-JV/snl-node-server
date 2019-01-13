@@ -7,6 +7,9 @@ var appPort = 64001;
 var dbUtils = require('./src/database.utils');
 var barUtils = require('./src/bars');
 var drinksUtils = require('./src/drinks');
+var swaggerUi = require('swagger-ui-express');
+var swaggerDocument = require('./src/swagger.json');
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -38,6 +41,12 @@ app.get('/drinkinfo', function(req, res) {
         res.send(503);
     })
 });
+
+
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api/v1', router);
+
 
 console.log('listeners initialised');
 

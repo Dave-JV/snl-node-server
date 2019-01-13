@@ -1,0 +1,56 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Student Nightlife",
+      "description": "Information on bars and drink prices in Limerick, Ireland"
+      
+    },
+    "schemes":
+    ["http"],
+    "host": "localhost:64001",
+    "paths": {
+      "/barinfo": {
+        "get": {
+          "tags": [
+            "barinfo"
+            ],
+            "summary": "Get list of bars",
+            "produces": [
+              "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/bar"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+        "bar": {
+          "type": "object",
+          "properties": {
+            "bar_id": {
+              "type": "integer"
+            },
+            "bar_name": {
+              "type": "string"
+            }
+          }
+        }
+        
+    }
+  
+  
+  }
+  
