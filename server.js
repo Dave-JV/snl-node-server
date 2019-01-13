@@ -9,6 +9,7 @@ var barUtils = require('./src/bars');
 var drinksUtils = require('./src/drinks');
 var swaggerUi = require('swagger-ui-express');
 var swaggerDocument = require('./src/swagger.json');
+const cors = require('cors')
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -43,6 +44,12 @@ app.get('/drinkinfo', function(req, res) {
 });
 
 
+var corsOptions = {
+    origin: 'http://localhost:4200/',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
+  }
+  
+  app.use(cors(corsOptions))
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // app.use('/api/v1', router);

@@ -8,6 +8,7 @@
     "mysql": "2.11.1"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "swagger-ui-express": "^4.0.2"
   }
