@@ -1,11 +1,7 @@
-function escape(functionCall, errorCallback) {
+export function escape(functionCall: () => void, errorCallback: (err: Error) => void) {
     try {
         functionCall();
     } catch (err) {
         errorCallback(err);
     }
 }
-
-module.exports = {
-    escape
-};
