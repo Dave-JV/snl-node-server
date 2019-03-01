@@ -1,6 +1,7 @@
 import { BarsService } from "./src/bars";
 import { Request, Response } from 'express';
 import { DrinksService } from "./src/drinks";
+import { first } from "lodash";
 
 var express = require('express');
 var bodyParser = require('body-parser')
@@ -43,9 +44,9 @@ app.get('/drinkinfo', async (req: Request, res: Response) => {
 });
 
 app.get('/bars/:barId', async (req: Request, res: Response) => {
-    const bar = await new BarsService().getBar(req.params['barId']);
+    const bars = await new BarsService().getBar(req.params['barId']);
     utils.escape(() => {
-        res.end(JSON.stringify({bar}));
+        res.end(JSON.stringify({bar: first(bars)}));
     }, (error: Error) => {
         console.log(error);
         res.send(503);

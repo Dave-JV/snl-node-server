@@ -13,7 +13,7 @@ export class BarsService {
     async getBars(): Promise<Bar[]> {
         return this.convertDBObjects(await this.db.queryDB('SELECT * FROM bars', undefined));   
     }
-    async getBar(barId: number): Promise<Bar> {
+    async getBar(barId: number): Promise<Bar []> {
         return await this.db.queryDB('SELECT * FROM bars WHERE bar_id = ?', [`${barId}`]); 
     }
 
