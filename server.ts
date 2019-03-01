@@ -42,6 +42,16 @@ app.get('/drinkinfo', async (req: Request, res: Response) => {
     })
 });
 
+app.get('/bars/:barId', async (req: Request, res: Response) => {
+    const bar = await new BarsService().getBar(req.params['barId']);
+    utils.escape(() => {
+        res.end(JSON.stringify({bar}));
+    }, (error: Error) => {
+        console.log(error);
+        res.send(503);
+    })
+});
+
 app.get('/bars/:barId/drinks', async (req: Request, res: Response) => {
     const drinks = await new DrinksService().getBarDrinks(req.params['barId']);
     utils.escape(() => {
