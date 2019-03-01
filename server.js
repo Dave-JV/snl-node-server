@@ -34,7 +34,18 @@ app.get('/barinfo', function(req, res) {
 
 app.get('/drinkinfo', function(req, res) {
     utils.escape(() => {
-        queryNightLifeDatabase('SELECT * FROM drinks', undefined, function(drinks) {
+        dbUtils.queryDatabase('SELECT * FROM drinks', undefined, function(drinks) {
+            res.end(drinksUtils.convertDrinkDBObjectsToJSON(drinks));
+        });
+    }, (error) => {
+        console.log(error);
+        res.send(503);
+    })
+});
+
+app.get('/bars/:barId/drinks', function(req, res) {
+    utils.escape(() => {
+        dbUtils.queryDatabase('SELECT * FROM drinks WHERE bar_id = ?', [req.params.barId], function(drinks) {
             res.end(drinksUtils.convertDrinkDBObjectsToJSON(drinks));
         });
     }, (error) => {
