@@ -22,24 +22,35 @@ app.use(bodyParser.json());
 
 console.log('app use initialised');
 
-app.get('/barinfo', function(req: Request, res: Response) {
+app.get('/barinfo', async (req: Request, res: Response) => {
+    const bars = await new BarsService().getBars();
     utils.escape(() => {
-        res.end(new BarsService().getBars());
+        res.end(JSON.stringify({bars}));
     }, (error: Error) => {
         console.log(error);
         res.send(503);
     })
 });
 
-app.get('/drinkinfo', function(req: Request, res: Response) {
+app.get('/drinkinfo', async (req: Request, res: Response) => {
+    const drinks = await new DrinksService().getDrinks();
     utils.escape(() => {
-        res.end(new DrinksService().getDrinks());
+        res.end(JSON.stringify({drinks}));
     }, (error: Error) => {
         console.log(error);
         res.send(503);
     })
 });
 
+app.get('/bars/:barId/drinks', async (req: Request, res: Response) => {
+    const drinks = await new DrinksService().getBarDrinks(req.params['barId']);
+    utils.escape(() => {
+        res.end(JSON.stringify({drinks}));
+    }, (error: Error) => {
+        console.log(error);
+        res.send(503);
+    })
+});
 
 var corsOptions = {
     origin: 'http://localhost:4200/',

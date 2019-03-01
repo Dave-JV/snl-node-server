@@ -11,7 +11,10 @@ export class DrinksService {
     }
     
     async getDrinks(): Promise<Drink []> {
-        return this.convertDBObjects(await this.db.queryDB('SELECT * FROM bars', undefined));   
+        return this.convertDBObjects(await this.db.queryDB('SELECT * FROM drinks', undefined));   
+    }
+    async getBarDrinks(barId: number): Promise<Drink []> {
+        return this.convertDBObjects(await this.db.queryDB('SELECT * FROM drinks WHERE bar_id = ?', [`${barId}`]));   
     }
 
     convertDBObjects(drinks: any): Drink [] {
