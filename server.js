@@ -10,6 +10,7 @@ var drinksUtils = require('./src/drinks');
 var swaggerUi = require('swagger-ui-express');
 var swaggerDocument = require('./src/swagger.json');
 const cors = require('cors')
+const _ = require('lodash');
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -36,6 +37,17 @@ app.get('/drinkinfo', function(req, res) {
     utils.escape(() => {
         dbUtils.queryDatabase('SELECT * FROM drinks', undefined, function(drinks) {
             res.end(drinksUtils.convertDrinkDBObjectsToJSON(drinks));
+        });
+    }, (error) => {
+        console.log(error);
+        res.send(503);
+    })
+});
+
+app.get('/bars/:barId', function(req, res) {
+    utils.escape(() => {
+        dbUtils.queryDatabase('SELECT * FROM bars WHERE bar_id = ?', [req.params.barId], function(bars) {
+            res.end(JSON.stringify({bar: _.first(bars)}));
         });
     }, (error) => {
         console.log(error);
