@@ -35,7 +35,7 @@ app.get('/barinfo', function(req, res) {
 
 app.get('/drinkinfo', function(req, res) {
     utils.escape(() => {
-        queryNightlifeDatabase('SELECT * FROM drinks', undefined, function(drinks) {
+        dbUtils.queryDatabase('SELECT * FROM drinks', undefined, function(drinks) {
             res.end(drinksUtils.convertDrinkDBObjectsToJSON(drinks));
         });
     }, (error) => {
